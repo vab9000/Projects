@@ -94,7 +94,7 @@ def intersecting(dir: str) -> bool:
                     return True
     return False
 
-current_block = classes.J(4, 0)
+current_block = random_block()
 
 while carryOn:
     # Main Event Loop
