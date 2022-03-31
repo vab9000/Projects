@@ -50,8 +50,6 @@ def row_made() -> None:
                 break
         if not false_encountered:
             remove_row(k)
-            row_made()
-            break
         k += 1
 
 def remove_row(num: int) -> None:
