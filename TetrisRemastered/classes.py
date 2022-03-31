@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Sequence
 from abc import ABC, abstractmethod
 
 class MultiBlock(ABC):
@@ -8,14 +7,14 @@ class MultiBlock(ABC):
         pass
 
     @abstractmethod
-    def rotate(self: MultiBlock, blocks: Sequence[Block], width: int, height: int) -> None:
+    def rotate(self: MultiBlock, blocks: list[Block], width: int, height: int) -> None:
         pass
 
 class Block:
-    def __init__(self: Block, x: int, y: int, color: Sequence[int]=(0,0,0)):
-        self.x = x
-        self.y = y
-        self.color = color
+    def __init__(self: Block, x: int, y: int, color: tuple[int]=(0,0,0)):
+        self.x: int = x
+        self.y: int = y
+        self.color: tuple = color
 
     def copy(self: Block) -> Block:
         return Block(self.x, self.y, self.color)
@@ -25,23 +24,23 @@ class Block:
 
 class O(MultiBlock):
     def __init__(self: O, x: int, y: int) -> None:
-        self.blocks = []
+        self.blocks: list[Block] = []
         self.blocks.append(Block(x, y, (255, 255, 0)))
         self.blocks.append(Block(x + 1, y, (255, 255, 0)))
         self.blocks.append(Block(x, y + 1, (255, 255, 0)))
         self.blocks.append(Block(x + 1, y + 1, (255, 255, 0)))
 
     def copy(self: O) -> O:
-        block = O(self.blocks[0].x, self.blocks[0].y)
+        block: O = O(self.blocks[0].x, self.blocks[0].y)
         return block
 
-    def rotate(self: O, blocks: Sequence[Block], width: int, height: int) -> None:
+    def rotate(self: O, blocks: list[Block], width: int, height: int) -> None:
         pass
 
 class I(MultiBlock):
     def __init__(self: I, x: int, y: int, rot: int=0):
-        self.blocks = []
-        self.rot = rot
+        self.blocks: list[Block] = []
+        self.rot: int = rot
         if rot == 0:
             self.blocks.append(Block(x, y, (0, 255, 255)))
             self.blocks.append(Block(x, y + 1, (0, 255, 255)))
@@ -54,15 +53,15 @@ class I(MultiBlock):
             self.blocks.append(Block(x - 3, y, (0, 255, 255)))
 
     def copy(self: I) -> I:
-        block = I(self.blocks[0].x, self.blocks[0].y, self.rot)
+        block: I = I(self.blocks[0].x, self.blocks[0].y, self.rot)
         return block
 
-    def rotate(self: I, blocks: Sequence[Block], width: int, height: int) -> None:
+    def rotate(self: I, blocks: list[Block], width: int, height: int) -> None:
         self.rot += 1
         if self.rot == 2:
             self.rot = 0
-        new_block = self.copy()
-        intersecting = False
+        new_block: I = self.copy()
+        intersecting: bool = False
         for block in new_block.blocks:
             for placed_block in blocks:
                 if block.x == placed_block.x and block.y == placed_block.y:
@@ -80,8 +79,8 @@ class I(MultiBlock):
 
 class S(MultiBlock):
     def __init__(self: S, x: int, y: int, rot: int=0):
-        self.blocks = []
-        self.rot = rot
+        self.blocks: list[Block] = []
+        self.rot: int = rot
         if rot == 0:
             self.blocks.append(Block(x, y, (0, 255, 0)))
             self.blocks.append(Block(x + 1, y, (0, 255, 0)))
@@ -94,15 +93,15 @@ class S(MultiBlock):
             self.blocks.append(Block(x + 1, y + 2, (0, 255, 0)))
 
     def copy(self: S) -> S:
-        block = S(self.blocks[0].x, self.blocks[0].y, self.rot)
+        block: S = S(self.blocks[0].x, self.blocks[0].y, self.rot)
         return block
 
-    def rotate(self: S, blocks: Sequence[Block], width: int, height: int) -> None:
+    def rotate(self: S, blocks: list[Block], width: int, height: int) -> None:
         self.rot += 1
         if self.rot == 2:
             self.rot = 0
-        new_block = self.copy()
-        intersecting = False
+        new_block: S = self.copy()
+        intersecting: bool = False
         for block in new_block.blocks:
             for placed_block in blocks:
                 if block.x == placed_block.x and block.y == placed_block.y:
@@ -120,8 +119,8 @@ class S(MultiBlock):
 
 class Z(MultiBlock):
     def __init__(self: Z, x: int, y: int, rot: int=0):
-        self.blocks = []
-        self.rot = rot
+        self.blocks: list[Block] = []
+        self.rot: int = rot
         if rot == 0:
             self.blocks.append(Block(x, y, (255, 0, 0)))
             self.blocks.append(Block(x + 1, y, (255, 0, 0)))
@@ -134,15 +133,15 @@ class Z(MultiBlock):
             self.blocks.append(Block(x - 1, y + 2, (255, 0, 0)))
 
     def copy(self: Z) -> Z:
-        block = Z(self.blocks[0].x, self.blocks[0].y, self.rot)
+        block: Z = Z(self.blocks[0].x, self.blocks[0].y, self.rot)
         return block
 
-    def rotate(self: Z, blocks: Sequence[Block], width: int, height: int) -> None:
+    def rotate(self: Z, blocks: list[Block], width: int, height: int) -> None:
         self.rot += 1
         if self.rot == 2:
             self.rot = 0
-        new_block = self.copy()
-        intersecting = False
+        new_block: Z = self.copy()
+        intersecting: bool = False
         for block in new_block.blocks:
             for placed_block in blocks:
                 if block.x == placed_block.x and block.y == placed_block.y:
@@ -160,8 +159,8 @@ class Z(MultiBlock):
 
 class T(MultiBlock):
     def __init__(self: T, x: int, y: int, rot: int=0):
-        self.blocks = []
-        self.rot = rot
+        self.blocks: list[Block] = []
+        self.rot: int = rot
         if rot == 0:
             self.blocks.append(Block(x, y + 1, (255, 0, 255)))
             self.blocks.append(Block(x + 1, y + 1, (255, 0, 255)))
@@ -184,6 +183,7 @@ class T(MultiBlock):
             self.blocks.append(Block(x + 1, y + 2, (255, 0, 255)))
 
     def copy(self: T) -> T:
+        block: T
         if self.rot == 0:
             block = T(self.blocks[0].x, self.blocks[0].y - 1, self.rot)
         elif self.rot == 3:
@@ -192,12 +192,12 @@ class T(MultiBlock):
             block = T(self.blocks[0].x, self.blocks[0].y, self.rot)
         return block
 
-    def rotate(self: T, blocks: Sequence[Block], width: int, height: int) -> None:
+    def rotate(self: T, blocks: list[Block], width: int, height: int) -> None:
         self.rot += 1
         if self.rot == 4:
             self.rot = 0
-        new_block = self.copy()
-        intersecting = False
+        new_block: T = self.copy()
+        intersecting: bool = False
         for block in new_block.blocks:
             for placed_block in blocks:
                 if block.x == placed_block.x and block.y == placed_block.y:
@@ -215,8 +215,8 @@ class T(MultiBlock):
 
 class L(MultiBlock):
     def __init__(self: L, x: int, y: int, rot: int=0):
-        self.rot = rot
-        self.blocks = []
+        self.rot: int = rot
+        self.blocks: list[Block] = []
         if rot == 0:
             self.blocks.append(Block(x, y, (255, 125, 0)))
             self.blocks.append(Block(x, y + 1, (255, 125, 0)))
@@ -239,6 +239,7 @@ class L(MultiBlock):
             self.blocks.append(Block(x + 1, y, (255, 125, 0)))
 
     def copy(self: L) -> L:
+        block: L
         if self.rot == 0:
             block = L(self.blocks[0].x, self.blocks[0].y, self.rot)
         elif self.rot == 1:
@@ -249,12 +250,12 @@ class L(MultiBlock):
             block = L(self.blocks[0].x + 1, self.blocks[0].y - 1, self.rot)
         return block
 
-    def rotate(self: L, blocks: Sequence[Block], width: int, height: int) -> None:
+    def rotate(self: L, blocks: list[Block], width: int, height: int) -> None:
         self.rot += 1
         if self.rot == 4:
             self.rot = 0
-        new_block = self.copy()
-        intersecting = False
+        new_block: L = self.copy()
+        intersecting: bool = False
         for block in new_block.blocks:
             for placed_block in blocks:
                 if block.x == placed_block.x and block.y == placed_block.y:
@@ -272,8 +273,8 @@ class L(MultiBlock):
 
 class J(MultiBlock):
     def __init__(self: J, x: int, y: int, rot: int=0):
-        self.rot = rot
-        self.blocks = []
+        self.rot: int = rot
+        self.blocks: list[Block] = []
         if rot == 0:
             self.blocks.append(Block(x, y, (0, 0, 255)))
             self.blocks.append(Block(x, y + 1, (0, 0, 255)))
@@ -296,6 +297,7 @@ class J(MultiBlock):
             self.blocks.append(Block(x + 1, y + 1, (0, 0, 255)))
 
     def copy(self: J) -> J:
+        block: J
         if self.rot == 0:
             block = J(self.blocks[0].x, self.blocks[0].y, self.rot)
         elif self.rot == 1:
@@ -306,12 +308,12 @@ class J(MultiBlock):
             block = J(self.blocks[0].x + 1, self.blocks[0].y, self.rot)
         return block
 
-    def rotate(self: J, blocks: Sequence[Block], width: int, height: int) -> None:
+    def rotate(self: J, blocks: list[Block], width: int, height: int) -> None:
         self.rot += 1
         if self.rot == 4:
             self.rot = 0
-        new_block = self.copy()
-        intersecting = False
+        new_block: J = self.copy()
+        intersecting: bool = False
         for block in new_block.blocks:
             for placed_block in blocks:
                 if block.x == placed_block.x and block.y == placed_block.y:
