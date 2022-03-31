@@ -1,5 +1,15 @@
 from __future__ import annotations
 from typing import Sequence
+from abc import ABC, abstractmethod
+
+class MultiBlock(ABC):
+    @abstractmethod
+    def copy(self: MultiBlock) -> MultiBlock:
+        pass
+
+    @abstractmethod
+    def rotate(self: MultiBlock, blocks: Sequence[Block], width: int, height: int) -> None:
+        pass
 
 class Block:
     def __init__(self: Block, x: int, y: int, color: Sequence[int]=(0,0,0)):
@@ -13,7 +23,7 @@ class Block:
     def __str__(self: Block) -> str:
         return '(' + str(self.x) + ', ' + str(self.y) + ')'
 
-class O:
+class O(MultiBlock):
     def __init__(self: O, x: int, y: int) -> None:
         self.blocks = []
         self.blocks.append(Block(x, y, (255, 255, 0)))
@@ -28,7 +38,7 @@ class O:
     def rotate(self: O, blocks: Sequence[Block], width: int, height: int) -> None:
         pass
 
-class I:
+class I(MultiBlock):
     def __init__(self: I, x: int, y: int, rot: int=0):
         self.blocks = []
         self.rot = rot
@@ -68,7 +78,7 @@ class I:
             if self.rot == -1:
                 self.rot = 1
 
-class S:
+class S(MultiBlock):
     def __init__(self: S, x: int, y: int, rot: int=0):
         self.blocks = []
         self.rot = rot
@@ -108,7 +118,7 @@ class S:
             if self.rot == -1:
                 self.rot = 1
 
-class Z:
+class Z(MultiBlock):
     def __init__(self: Z, x: int, y: int, rot: int=0):
         self.blocks = []
         self.rot = rot
@@ -148,7 +158,7 @@ class Z:
             if self.rot == -1:
                 self.rot = 1
 
-class T:
+class T(MultiBlock):
     def __init__(self: T, x: int, y: int, rot: int=0):
         self.blocks = []
         self.rot = rot
@@ -203,7 +213,7 @@ class T:
             if self.rot == -1:
                 self.rot = 3
 
-class L:
+class L(MultiBlock):
     def __init__(self: L, x: int, y: int, rot: int=0):
         self.rot = rot
         self.blocks = []
@@ -260,7 +270,7 @@ class L:
             if self.rot == -1:
                 self.rot = 3
 
-class J:
+class J(MultiBlock):
     def __init__(self: J, x: int, y: int, rot: int=0):
         self.rot = rot
         self.blocks = []
