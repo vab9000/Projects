@@ -1,4 +1,3 @@
-from typing import Sequence
 import classes
 import time
 import random
@@ -7,22 +6,22 @@ import pygame
 pygame.init()
 
 size = (500, 800)
-screen = pygame.display.set_mode(size)
+screen: pygame.Surface = pygame.display.set_mode(size)
 pygame.display.set_caption("Tetris")
 
-height = screen.get_height()
-width = screen.get_width()
-blocks = []
-new_time = time.time()
-block_types = [classes.O, classes.I, classes.S, classes.Z, classes.T, classes.L, classes.J]
+height: int = screen.get_height()
+width: int = screen.get_width()
+blocks: list[classes.MultiBlock] = []
+new_time: float = time.time()
+block_types: list[classes.MultiBlock] = [classes.O, classes.I, classes.S, classes.Z, classes.T, classes.L, classes.J]
 
-carryOn = True
-clock = pygame.time.Clock()
+carryOn: bool = True
+clock: pygame.time.Clock = pygame.time.Clock()
 
-def print2D(array: Sequence[Sequence]) -> None:
-    i = 0
+def print2D(array: list[list]) -> None:
+    i: int = 0
     while i < height/50:
-        j = 0
+        j: int = 0
         while j < width/50:
             print(str(array[i][j]), end=', ')
             j += 1
@@ -30,11 +29,11 @@ def print2D(array: Sequence[Sequence]) -> None:
         print()
 
 def row_made() -> None:
-    array = list()
-    i = 0
+    array: list[list[bool]] = []
+    i: int = 0
     while i < height/50:
-        row = list()
-        j = 0
+        row: list[bool] = []
+        j: int = 0
         while j < width/50:
             row.append(False)
             j += 1
@@ -42,9 +41,9 @@ def row_made() -> None:
         i += 1
     for block in blocks:
         array[block.y][block.x] = True
-    k = 0
+    k: int = 0
     for row in array:
-        false_encountered = False
+        false_encountered: bool = False
         for block in row:
             if not block:
                 false_encountered = True
@@ -56,7 +55,7 @@ def row_made() -> None:
         k += 1
 
 def remove_row(num: int) -> None:
-    i = 0
+    i: int = 0
     while i < len(blocks):
         if blocks[i].y == num:
             blocks.remove(blocks[i])
@@ -67,10 +66,11 @@ def remove_row(num: int) -> None:
             block.y += 1
 
 def random_block() -> classes.MultiBlock:
-    rand = random.randrange(0, len(block_types))
+    rand: int = random.randrange(0, len(block_types))
     return block_types[rand](4, 0)
 
 def intersecting(dir: str) -> bool:
+    new_block: classes.MultiBlock
     if dir == 'down':
         new_block = current_block.copy()
         for block in new_block.blocks:
@@ -94,7 +94,7 @@ def intersecting(dir: str) -> bool:
                     return True
     return False
 
-current_block = random_block()
+current_block: classes.MultiBlock = random_block()
 
 while carryOn:
     # Main Event Loop
