@@ -19,7 +19,7 @@ block_types = [classes.O, classes.I, classes.S, classes.Z, classes.T, classes.L,
 carryOn = True
 clock = pygame.time.Clock()
 
-def print2D(array: Sequence[Sequence]):
+def print2D(array: Sequence[Sequence]) -> None:
     i = 0
     while i < height/50:
         j = 0
@@ -29,7 +29,7 @@ def print2D(array: Sequence[Sequence]):
         i += 1
         print()
 
-def row_made():
+def row_made() -> None:
     array = list()
     i = 0
     while i < height/50:
@@ -55,7 +55,7 @@ def row_made():
             break
         k += 1
 
-def remove_row(num: int):
+def remove_row(num: int) -> None:
     i = 0
     while i < len(blocks):
         if blocks[i].y == num:
@@ -66,11 +66,11 @@ def remove_row(num: int):
         if block.y < num:
             block.y += 1
 
-def random_block():
+def random_block() -> classes.MultiBlock:
     rand = random.randrange(0, len(block_types))
     return block_types[rand](4, 0)
 
-def intersecting(dir: str):
+def intersecting(dir: str) -> bool:
     if dir == 'down':
         new_block = current_block.copy()
         for block in new_block.blocks:
