@@ -9,9 +9,7 @@ class Player:
     def __init__(self, x, y):
         self.x_pos = x
         self.y_pos = y
-        self.img = pygame.image.load(
-            '/Users/home/varun/Projects/AlienInvaders/player.jpeg'
-        )
+        self.img = pygame.image.load('AlienInvaders\player.jpeg')
         self.img = pygame.transform.scale(self.img, (70, 60))
 
     def render(self, screen):

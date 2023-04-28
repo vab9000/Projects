@@ -51,7 +51,7 @@ while CARRY_ON:
     elif ALIVE:
         berry.render(screen)
         player.render(screen)
-        if time.time() - new_time >= 0.01:
+        if time.time() - new_time >= 0.00:
             if len(move_queue) == 0:
                 move_queue = new_snake_ai.ai_move()
             if player.check_collision():

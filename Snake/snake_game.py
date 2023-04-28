@@ -13,7 +13,7 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 
 # Open a window
-size = (520, 520)
+size = (20*17, 20*17)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Snake")
 
